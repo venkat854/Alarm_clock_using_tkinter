@@ -1,27 +1,41 @@
 ##Importing all the necessary libraries to form the alarm clock:
-import tkinter
+import tkinter as tk
 from tkinter import *
+from tkinter import ttk
 import datetime
 import time
 from playsound import playsound
 
 ##Initialising the tkinter
-root = Tk()
+root = tk.Tk()
 root.title("Alarm Clock")
 root.geometry("400x300")
-Label(root, text= "Enter time in 24 hour format!", fg="red",bg="black",font=("Times new Roman",15)).place(x=110,y=200)
-Label(root,text = "Hour  Min   Sec",font=60).place(x = 140)
-Label(root,text = "When to wake you up",fg="blue",relief = "solid",font=("Helevetica",15)).place(x=110, y=60)
+Label(root, text= "Enter time in 24 hour format!", fg="red",bg="black",
+      font=("Times new Roman",15)).place(x=110,y=200)
+Label(root,text = "Hour  Min   Sec     Day",font=60).place(x = 100)
+Label(root,text = "When to wake you up",fg="blue",relief = "solid",
+      font=("Helevetica",15)).place(x=110, y=60)
 
 ## The Variables we require to set the alarm(initialization):
 hour = StringVar()
 min = StringVar()
 sec = StringVar()
+n = tk.StringVar()
 
 ##Time required to set the alarm clock:
-hourTime = Entry(root,textvariable = hour,bg = "pink",width = 5).place(x=140,y=30)
-minTime = Entry(root,textvariable = min,bg = "pink",width = 5).place(x=180,y=30)
-secTime = Entry(root,textvariable = sec,bg = "pink",width = 5).place(x=220,y=30)
+hourTime = Entry(root,textvariable = hour,bg = "pink",width = 5).place(x=100,y=30)
+minTime = Entry(root,textvariable = min,bg = "pink",width = 5).place(x=140,y=30)
+secTime = Entry(root,textvariable = sec,bg = "pink",width = 5).place(x=180,y=30)
+course = ttk.Combobox(root,textvariable=n,width=15)
+course['values']=('Sunday',
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday')
+course.place(x=220,y=30)
+course.current()
 
 ##Defining a function to ring the alarm by comparing current time with alarm setting time:
 def alarm(set_alarm_timer):
@@ -29,7 +43,7 @@ def alarm(set_alarm_timer):
     while True:
         time.sleep(1)
         current_time = datetime.datetime.now()
-        now = current_time.strftime("%H:%M:%S")
+        now = current_time.strftime("%H:%M:%S:%A")
         date = current_time.strftime("%d/%m/%Y")
         if now == set_alarm_timer:
             root.destroy()
@@ -41,10 +55,19 @@ def alarm(set_alarm_timer):
 
 ##defining a function to convert given time into a format
 def actual_time():
-    set_alarm_timer = f"{hour.get()}:{min.get()}:{sec.get()}"
+    set_alarm_timer = f"{hour.get()}:{min.get()}:{sec.get()}:{n.get()}"
     alarm(set_alarm_timer)
 
 
 #To take the time input by user:
-Button(root,text = "Set Alarm",fg="red",width = 20,height = 5,font=("Times new Roman",10,"bold"),command = actual_time).place(x =140,y=100)
+Button(root,text = "Set Alarm",fg="red",width = 20,height = 5,font=("Times new Roman",10,"bold"),
+       command = actual_time).place(x =140,y=100)
 root.mainloop()
+
+
+
+
+
+
+
+
