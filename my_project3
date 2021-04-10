@@ -63,11 +63,3 @@ def actual_time():
 Button(root,text = "Set Alarm",fg="red",width = 20,height = 5,font=("Times new Roman",10,"bold"),
        command = actual_time).place(x =140,y=100)
 root.mainloop()
-
-
-
-
-
-
-
-
